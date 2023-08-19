@@ -3,6 +3,14 @@ import { Hono } from "hono"
 const app = new Hono()
 
 app.use('/*', async (c, next) => {
+  try{
+    await c.next()
+  } catch(error) {
+    return c.text(`${error.name}: ${error.message}`)
+  }
+})
+
+app.use('/*', async (c, next) => {
   c.header('Access-Control-Allow-Origin', '*')
   await c.next()
 })
