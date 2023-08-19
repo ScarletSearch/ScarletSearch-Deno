@@ -4,7 +4,7 @@ const app = new Hono()
 
 app.use('/*', async (c, next) => {
   try{
-    await c.next()
+    await next()
   } catch(error) {
     return c.text(`${error.name}: ${error.message}`)
   }
@@ -12,7 +12,7 @@ app.use('/*', async (c, next) => {
 
 app.use('/*', async (c, next) => {
   c.header('Access-Control-Allow-Origin', '*')
-  await c.next()
+  await next()
 })
 app.get('/about', c => c.json({
   basePath: '/',
